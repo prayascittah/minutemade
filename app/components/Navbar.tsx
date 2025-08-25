@@ -22,7 +22,7 @@ export default function Navbar() {
           </Link>
 
           <button
-            className="flex items-center space-x-3 bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:shadow-lg"
+            className="flex items-center sm:space-x-3 bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:shadow-lg"
             style={typography.button}
             onClick={() => {
               // TODO: Implement Google sign-in functionality
@@ -34,7 +34,7 @@ export default function Navbar() {
               alt="Google logo"
               className="w-4 h-4"
             />
-            <span>Get started</span>
+            <span className="hidden sm:inline">Get started</span>
           </button>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mic, Zap, Users, ArrowRight, Clock } from "lucide-react";
+import { Mic, Zap, Users, Clock } from "lucide-react";
 import Navbar from "./components/Navbar";
 import { typography } from "./styles/typography";
 
@@ -85,8 +85,8 @@ export default function LandingPage() {
                           className="text-gray-900 text-lg"
                           style={typography.tagline}
                         >
-                          "Can you check my mail and Slack for any new urgent
-                          updates?"
+                          &quot;Can you check my mail and Slack for any new
+                          urgent updates?&quot;
                         </p>
                       </div>
                     </div>
