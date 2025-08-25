@@ -13,6 +13,7 @@ export default function Home() {
   const [isListening, setIsListening] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [currentSuggestion, setCurrentSuggestion] = useState("");
+  const [isVisible, setIsVisible] = useState(true);
 
   const suggestedDialogues = [
     "Can you check my recent emails?",
@@ -38,14 +39,21 @@ export default function Home() {
     setCurrentSuggestion(suggestedDialogues[randomIndex]);
   }, []);
 
-  // Change suggestion every 3 seconds when not listening
+  // Change suggestion every 3 seconds when not listening with animations
   useEffect(() => {
     if (!isListening && isClient) {
       const interval = setInterval(() => {
-        const randomIndex = Math.floor(
-          Math.random() * suggestedDialogues.length
-        );
-        setCurrentSuggestion(suggestedDialogues[randomIndex]);
+        // Fade out
+        setIsVisible(false);
+
+        // After fade out completes, change text and fade in
+        setTimeout(() => {
+          const randomIndex = Math.floor(
+            Math.random() * suggestedDialogues.length
+          );
+          setCurrentSuggestion(suggestedDialogues[randomIndex]);
+          setIsVisible(true);
+        }, 300); // Match the transition duration
       }, 3000);
 
       return () => clearInterval(interval);
@@ -57,7 +65,7 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-7xl mx-auto bg-white border border-gray-200 shadow-sm min-h-screen">
-          <Navbar showBackButton={true} />
+          <Navbar />
           <div className="flex flex-col relative p-8 pt-24">
             <div className="flex-1 flex items-center justify-center w-full max-w-4xl mx-auto min-h-[calc(100vh-6rem)]">
               <div className="text-center px-6">
@@ -73,9 +81,6 @@ export default function Home() {
               <button
                 disabled
                 className="w-20 h-20 flex items-center justify-center shadow-lg bg-white border-2 border-black opacity-50"
-                style={{
-                  borderRadius: "0.5rem",
-                }}
               >
                 <Mic size={28} className="text-black" />
               </button>
@@ -110,11 +115,13 @@ export default function Home() {
 
   const startListening = () => {
     setIsListening(true);
+    setIsVisible(true); // Ensure visibility when listening
     SpeechRecognition.startListening({ continuous: true });
   };
 
   const stopListening = () => {
     setIsListening(false);
+    setIsVisible(true); // Reset visibility when stopping
     SpeechRecognition.stopListening();
   };
 
@@ -143,7 +150,9 @@ export default function Home() {
                 </p>
               ) : (
                 <p
-                  className="text-gray-400 text-xl md:text-2xl transition-opacity duration-500"
+                  className={`text-gray-400 text-xl md:text-2xl transition-opacity duration-300 ${
+                    isVisible ? "opacity-100" : "opacity-0"
+                  }`}
                   style={typography.status}
                 >
                   {isListening ? "Listening..." : `"${currentSuggestion}"`}
@@ -170,16 +179,16 @@ export default function Home() {
             <button
               onClick={toggleListening}
               className={`
-                w-20 h-20 flex items-center justify-center shadow-lg hover:shadow-xl
+                w-16 h-16 flex items-center justify-center shadow-lg hover:shadow-xl
                 transition-all duration-300 ease-in-out
                 ${
                   isListening
-                    ? "bg-black scale-110"
+                    ? "bg-black scale-110 hover:cursor-pointer"
                     : "bg-white border-2 border-black hover:bg-gray-50"
                 }
               `}
               style={{
-                borderRadius: isListening ? "50%" : "0.5rem",
+                borderRadius: isListening ? "50%" : "0",
                 transition:
                   "all 0.3s ease-in-out, border-radius 0.3s ease-in-out",
               }}
