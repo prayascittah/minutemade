@@ -39,12 +39,6 @@ export default function LandingPage() {
                       Try MinuteMade
                     </button>
                   </Link>
-                  <button
-                    className="text-gray-600 hover:text-gray-900 px-6 py-3 transition-colors"
-                    style={typography.button}
-                  >
-                    Learn more
-                  </button>
                 </div>
 
                 <div
