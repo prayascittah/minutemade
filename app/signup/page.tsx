@@ -28,7 +28,7 @@ export default function SignupPage() {
 
     const { data, error } = await authService.signUp(email, password, {
       username: username,
-      full_name: username, // You can add a separate full name field later
+      full_name: username,
     });
 
     if (error) {
@@ -97,14 +97,6 @@ export default function SignupPage() {
                   </svg>
                   Continue with Google
                 </button>
-
-                <button
-                  className="w-full flex items-center justify-center gap-2 py-2 px-3 border border-gray-300 hover:border-gray-400 text-black font-medium transition-colors text-sm"
-                  style={typography.button}
-                >
-                  <Mail className="w-5 h-5 text-red-500" />
-                  Continue with Email
-                </button>
               </div>
 
               <div className="text-center text-gray-500 mb-2">or</div>
@@ -137,7 +129,7 @@ export default function SignupPage() {
                 </div>
 
                 {/* Email Field */}
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <label
                     htmlFor="email"
                     className="block text-sm font-medium text-black"
@@ -162,7 +154,7 @@ export default function SignupPage() {
                 </div>
 
                 {/* Password Field */}
-                <div className="space-y-2 mb-6">
+                <div className="space-y-1 mb-4">
                   <label
                     htmlFor="password"
                     className="block text-sm font-medium text-black"
@@ -216,7 +208,7 @@ export default function SignupPage() {
               </form>
 
               {/* Footer */}
-              <div className="mt-6 text-center">
+              <div className="mt-4 text-center">
                 <p className="text-gray-600 text-xs">
                   Already have an account?{" "}
                   <Link
