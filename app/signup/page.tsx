@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { authService } from "../../lib/database";
+import { authService } from "../../lib/simple-database";
 import { typography } from "../styles/typography";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import Link from "next/link";
@@ -28,7 +28,6 @@ export default function SignupPage() {
 
     const { data, error } = await authService.signUp(email, password, {
       username: username,
-      full_name: username,
     });
 
     if (error) {

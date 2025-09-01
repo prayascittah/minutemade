@@ -6,7 +6,7 @@ import { Award } from "lucide-react";
 import { typography } from "../styles/typography";
 
 const AwardBadge = () => {
-  const message = "We believe we are the best. Hence we are the best";
+  const message = "We believe we are the best. Hence we are the best.";
 
   return (
     <div className="flex justify-center">
