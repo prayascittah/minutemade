@@ -37,7 +37,7 @@ export default function ProfilePage() {
         toast.error("An unexpected error occurred");
         console.error("Profile page error:", err);
       } finally {
-        setLoading(true);
+        setLoading(false);
       }
     };
     checkAuthAndGetProfile();
@@ -48,8 +48,8 @@ export default function ProfilePage() {
       <div className="min-h-screen bg-gray-50">
         <Navbar />
         <div className="max-w-4xl mx-auto px-4 py-8">
-          <div className="animate-pulse shadow rounded-lg bg-white">
-            <div className="flex flex-col border-b-2 border-gray-200">
+          <div className="animate-pulse shadow rounded-lg bg-white divide-y divide-gray-200">
+            <div className="flex flex-col">
               <div className="p-6 flex flex-col">
                 <div className="flex items-center space-x-4">
                   <div className="w-20 h-20 bg-gray-300 rounded-full"></div>
@@ -60,9 +60,9 @@ export default function ProfilePage() {
                 </div>
               </div>
             </div>
-            <div className="p-6 flex flex-col w-9/20 item-center space-y-5 border-b-2 border-gray-200">
+            <div className="p-7 flex flex-col w-9/20 item-center space-y-7">
               <div className="bg-gray-300 rounded w-45 h-5"></div>
-              <div className="grid grid-cols-2 grid-rows-3 gap-y-3.5 gap-x-2">
+              <div className="grid grid-cols-2 grid-rows-3 gap-y-5 gap-x-2">
                 <div className="bg-gray-300 rounded w-22 h-4"></div>
                 <div className="bg-gray-300 rounded w-22 h-4"></div>
                 <div className="bg-gray-300 rounded w-32 h-4"></div>
