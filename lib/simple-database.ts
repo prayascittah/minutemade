@@ -3,7 +3,6 @@ import { supabase } from "./supabaseClient";
 export interface Profile {
   id: string;
   username?: string;
-  full_name?: string;
   avatar_url?: string;
   created_at: string;
   updated_at: string;
@@ -53,20 +52,22 @@ export interface Event {
 export const authService = {
   // Get current user
   async getCurrentUser() {
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
-    return { user, error };
+    const { data, error } = await supabase.auth.getUser();
+    return { data, error };
+  },
+
+  // Listen for auth state changes
+  onAuthStateChange(callback: (event: string, session: any) => void) {
+    return supabase.auth.onAuthStateChange(callback);
   },
 
   // Sign up with email and password
-  async signUp(email: string, password: string, userData?: any) {
+  async signUp(email: string, password: string, username: string) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        data: userData,
+        data: { username },
       },
     });
     return { data, error };
@@ -82,7 +83,7 @@ export const authService = {
   },
 
   // Sign in with OAuth (Google)
-  async signInWithOAuth(provider: "google" | "github" | "discord") {
+  async signInWithOAuth(provider: "google") {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {

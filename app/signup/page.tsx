@@ -4,6 +4,7 @@ import { authService } from "../../lib/simple-database";
 import { typography } from "../styles/typography";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import DashboardPreview from "../components/DashboardPreview";
 
@@ -21,19 +22,18 @@ export default function SignupPage() {
     setError("");
 
     if (password.length < 6) {
-      setError("Password must be at least 6 characters long");
+      toast.error("Password must be at least 6 characters long");
       setLoading(false);
       return;
     }
 
-    const { data, error } = await authService.signUp(email, password, {
-      username: username,
-    });
+    const { error } = await authService.signUp(email, password, username);
 
     if (error) {
+      toast.error(error.message);
       setError(error.message);
     } else {
-      // Redirect to login with success message
+      toast.success("Account created! Check your email for confirmation.");
       window.location.href =
         "/login?message=Check your email for confirmation!";
     }
@@ -42,11 +42,11 @@ export default function SignupPage() {
   };
 
   const handleGoogleSignup = async () => {
-    const { data, error } = await authService.signInWithOAuth("google");
+    const { error } = await authService.signInWithOAuth("google");
     if (error) {
+      toast.error(`Google signup failed: ${error.message}`);
       setError(error.message);
     }
-    // OAuth redirect is handled automatically
   };
 
   return (
@@ -98,7 +98,14 @@ export default function SignupPage() {
                 </button>
               </div>
 
-              <div className="text-center text-gray-500 mb-2">or</div>
+              {/* Elegant Divider */}
+              <div className="relative flex py-6 items-center w-80 mx-auto">
+                <div className="flex-grow border-t border-gray-300"></div>
+                <span className="flex-shrink mx-4 text-gray-500 text-sm font-medium">
+                  Or continue with email
+                </span>
+                <div className="flex-grow border-t border-gray-300"></div>
+              </div>
 
               {/* Form */}
               <form onSubmit={handleSignup} className="space-y-4">

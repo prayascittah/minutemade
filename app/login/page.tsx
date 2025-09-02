@@ -4,6 +4,7 @@ import { authService } from "../../lib/simple-database";
 import { typography } from "../styles/typography";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import Navbar from "../components/Navbar";
 
 export default function LoginPage() {
@@ -21,9 +22,10 @@ export default function LoginPage() {
     const { data, error } = await authService.signIn(email, password);
 
     if (error) {
+      toast.error(error.message);
       setError(error.message);
     } else {
-      // Redirect to home page on successful login
+      toast.success("Successfully logged in!");
       window.location.href = "/home";
     }
 
@@ -33,9 +35,9 @@ export default function LoginPage() {
   const handleGoogleSignup = async () => {
     const { data, error } = await authService.signInWithOAuth("google");
     if (error) {
+      toast.error(`Google login failed: ${error.message}`);
       setError(error.message);
     }
-    // OAuth redirect is handled automatically
   };
 
   return (
