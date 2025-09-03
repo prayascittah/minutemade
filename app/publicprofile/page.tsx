@@ -4,38 +4,18 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, User, Calendar, Mail } from "lucide-react";
 import { typography } from "../styles/typography";
 import { useAuth } from "../hooks/useAuth";
+import { ProfileCardSkeleton } from "../components/ui";
 
 export default function PublicProfilePage() {
   const { user, loading } = useAuth();
   const router = useRouter();
 
   if (loading) {
-    return (
-      <div className="h-screen bg-gray-50 overflow-hidden">
-        <div className="max-w-lg mx-auto px-4 py-8">
-          <div className="animate-pulse">
-            <div className="mb-6">
-              <div className="h-6 w-32 bg-gray-300 rounded"></div>
-            </div>
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-10">
-              <div className="text-center">
-                <div className="w-20 h-20 bg-gray-300 rounded-2xl mx-auto mb-4"></div>
-                <div className="h-7 w-32 bg-gray-300 rounded mx-auto mb-2"></div>
-                <div className="h-4 w-40 bg-gray-300 rounded mx-auto mb-6"></div>
-                <div className="space-y-3">
-                  <div className="h-4 w-full bg-gray-300 rounded"></div>
-                  <div className="h-4 w-full bg-gray-300 rounded"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    return <ProfileCardSkeleton />;
   }
 
   return (
-    <div className="h-screen bg-gray-50 overflow-hidden">
+    <div className="h-[calc(100vh-66px)] bg-gray-50 overflow-auto">
       {/* Back Button - Top left of content area */}
       <div className="p-6">
         <button
@@ -48,7 +28,7 @@ export default function PublicProfilePage() {
           </span>
         </button>
       </div>
-      <div className="max-w-lg mx-auto px-4 pb-6">
+      <div className="max-w-lg mx-auto sm:px-4 sm:my-10 flex items-center">
         {/* Profile Card */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-10">
           {user ? (
@@ -86,7 +66,7 @@ export default function PublicProfilePage() {
                     <div className="w-8 h-8 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
                       <Mail className="w-4 h-4 text-gray-600" />
                     </div>
-                    <div>
+                    <div className="p-1">
                       <p className="text-sm text-gray-500 font-medium mb-1">
                         Email
                       </p>
@@ -106,7 +86,7 @@ export default function PublicProfilePage() {
                     <div className="w-8 h-8 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
                       <Calendar className="w-4 h-4 text-gray-600" />
                     </div>
-                    <div>
+                    <div className="p-1">
                       <p className="text-sm text-gray-500 font-medium mb-1">
                         Joined
                       </p>

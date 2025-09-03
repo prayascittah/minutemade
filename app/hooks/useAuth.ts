@@ -20,6 +20,10 @@ export const useAuth = (): UseAuthReturn => {
     const getUser = async () => {
       try {
         setLoading(true);
+
+        // Add a longer delay to see the loading state clearly
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+
         const { data, error } = await supabase.auth.getUser();
 
         if (error) {

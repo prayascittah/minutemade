@@ -35,12 +35,12 @@ export default function LandingPage() {
                     Get Started Free
                   </button>
                 </Link>
-                <Link href="/login">
+                <Link href="/signup">
                   <button
                     className="bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 px-6 py-3 rounded-lg transition-colors"
                     style={typography.button}
                   >
-                    Sign In
+                    Sign Up
                   </button>
                 </Link>
               </div>

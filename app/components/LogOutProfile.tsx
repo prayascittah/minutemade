@@ -112,21 +112,12 @@ const LogOutProfile = ({ user, setUser }: LogOutProfileProps) => {
       <button
         onClick={() => router.push("/profile")}
         onMouseEnter={() => setIsOpen(true)}
-        className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-gray-50 transition-colors"
+        className="flex items-center space-x-1 px-3 py-2 rounded-md hover:bg-gray-50 transition-colors"
         style={typography.button}
       >
-        {/* Avatar */}
-        {user?.avatar_url ? (
-          <img
-            src={user.avatar_url}
-            alt={user.username || "User"}
-            className="w-6 h-6 rounded-md object-cover"
-          />
-        ) : (
-          <div className="w-6 h-6 bg-gray-200 rounded-md flex items-center justify-center">
-            <User className="w-3 h-3 text-gray-600" />
-          </div>
-        )}
+        <div className="w-6 h-6 rounded-md flex items-center justify-center">
+          <User className="w-4 h-4 text-gray-600" />
+        </div>
 
         {/* Username */}
         <span className="hidden sm:block text-sm font-medium text-gray-700">

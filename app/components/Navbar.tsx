@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import LoginInSignUp from "./LoginInSignUp";
 import LogOutProfile from "./LogOutProfile";
+import { NavbarSkeleton } from "./ui";
 
 const navItems = [
   { name: "Log In", href: "/login" },
@@ -46,14 +47,7 @@ export default function Navbar() {
             </span>
           </Link>
           {loading ? (
-            <div className="relative flex rounded-md p-0.5 sm:p-1">
-              <div className="relative px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 text-xs sm:text-sm font-medium rounded-md">
-                <div className="bg-gray-200 animate-pulse rounded-md h-7 w-12 sm:w-14"></div>
-              </div>
-              <div className="relative px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 text-xs sm:text-sm font-medium rounded-md">
-                <div className="bg-gray-200 animate-pulse rounded-md h-7 w-16 sm:w-18"></div>
-              </div>
-            </div>
+            <NavbarSkeleton />
           ) : user ? (
             <LogOutProfile user={user} setUser={setUser} />
           ) : (

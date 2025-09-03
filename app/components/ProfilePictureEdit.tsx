@@ -6,6 +6,7 @@ import { Profile } from "@/lib/simple-database";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import { typography } from "@/app/styles/typography";
+import { LoadingSpinner } from "./ui";
 
 interface ProfilePictureEditProps {
   user: Profile;
@@ -105,7 +106,7 @@ export default function ProfilePictureEdit({
             onClick={!uploading ? triggerFileInput : undefined}
           >
             {uploading ? (
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+              <LoadingSpinner size="sm" color="white" />
             ) : (
               <Pen className="w-4 h-4 text-white" />
             )}

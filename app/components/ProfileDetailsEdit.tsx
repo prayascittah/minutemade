@@ -6,6 +6,7 @@ import { Profile, profileService, authService } from "@/lib/simple-database";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { typography } from "@/app/styles/typography";
+import { LoadingSpinner } from "./ui";
 
 interface ProfileDetailsEditProps {
   user: Profile;
@@ -204,7 +205,7 @@ export default function ProfileDetailsEdit({
                 style={typography.button}
               >
                 {loading ? (
-                  <div className="animate-spin rounded-full h-2 w-2 border-b border-white"></div>
+                  <LoadingSpinner size="sm" color="white" />
                 ) : (
                   <Save className="w-2 h-2" />
                 )}
@@ -277,7 +278,7 @@ export default function ProfileDetailsEdit({
                 style={typography.button}
               >
                 {loading ? (
-                  <div className="animate-spin rounded-full h-2 w-2 border-b border-white"></div>
+                  <LoadingSpinner size="sm" color="white" />
                 ) : (
                   <Pen className="w-2 h-2" />
                 )}
@@ -376,7 +377,7 @@ export default function ProfileDetailsEdit({
                 style={typography.button}
               >
                 {loading ? (
-                  <div className="animate-spin rounded-full h-2 w-2 border-b border-white"></div>
+                  <LoadingSpinner size="sm" color="white" />
                 ) : (
                   <Pen className="w-2 h-2" />
                 )}
