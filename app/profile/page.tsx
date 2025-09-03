@@ -162,17 +162,17 @@ export default function AuthenticatedProfilePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <div className="p-6">
+        <button
+          onClick={() => router.push("/home")}
+          className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          <span style={typography.button}>Back to Home</span>
+        </button>
+      </div>
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Back Button */}
-        <div className="mb-6">
-          <button
-            onClick={() => router.push("/home")}
-            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span style={typography.button}>Back to Home</span>
-          </button>
-        </div>
 
         {/* Profile Header */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
@@ -195,12 +195,12 @@ export default function AuthenticatedProfilePage() {
             {/* Right Side - User Info */}
             <div>
               <h1
-                className="text-2xl font-bold text-gray-900"
+                className="text-3xl font-bold text-gray-900"
                 style={typography.hero}
               >
                 {user?.username || "User"}
               </h1>
-              <p className="text-gray-600" style={typography.caption}>
+              <p className="text-lg text-gray-600" style={typography.caption}>
                 Member since{" "}
                 {new Date(user?.created_at || "").toLocaleDateString()}
               </p>
@@ -211,7 +211,7 @@ export default function AuthenticatedProfilePage() {
           <div className="space-y-6">
             <div>
               <h2
-                className="text-lg font-semibold text-gray-900 mb-6"
+                className="text-xl font-semibold text-gray-900 mb-6"
                 style={typography.sectionHeader}
               >
                 Profile Information
@@ -222,7 +222,7 @@ export default function AuthenticatedProfilePage() {
                 <div className="flex items-center justify-between py-3">
                   <div className="flex items-center space-x-4 flex-1">
                     <label
-                      className="block text-sm font-medium text-gray-700 w-28"
+                      className="block text-base font-medium text-gray-700 w-28"
                       style={typography.technical}
                     >
                       Username
@@ -238,7 +238,7 @@ export default function AuthenticatedProfilePage() {
                               username: e.target.value,
                             })
                           }
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent text-base"
                           style={typography.technical}
                           disabled={saving}
                         />
@@ -260,7 +260,7 @@ export default function AuthenticatedProfilePage() {
                     ) : (
                       <div className="flex items-center justify-between flex-1">
                         <p
-                          className="text-gray-900"
+                          className="text-gray-900 text-base"
                           style={typography.technical}
                         >
                           {user?.username || "Not set"}
@@ -280,13 +280,16 @@ export default function AuthenticatedProfilePage() {
                 <div className="flex items-center justify-between py-3">
                   <div className="flex items-center space-x-4 flex-1">
                     <label
-                      className="block text-sm font-medium text-gray-700 w-28"
+                      className="block text-base font-medium text-gray-700 w-28"
                       style={typography.technical}
                     >
                       Email
                     </label>
                     <div className="flex items-center justify-between flex-1">
-                      <p className="text-gray-900" style={typography.technical}>
+                      <p
+                        className="text-gray-900 text-base"
+                        style={typography.technical}
+                      >
                         {user?.email || "Not available"}
                       </p>
                       <button
@@ -304,13 +307,16 @@ export default function AuthenticatedProfilePage() {
                 <div className="flex items-center justify-between py-3">
                   <div className="flex items-center space-x-4 flex-1">
                     <label
-                      className="block text-sm font-medium text-gray-700 w-28"
+                      className="block text-base font-medium text-gray-700 w-28"
                       style={typography.technical}
                     >
                       Password
                     </label>
                     <div className="flex items-center justify-between flex-1">
-                      <p className="text-gray-500" style={typography.technical}>
+                      <p
+                        className="text-gray-500 text-base"
+                        style={typography.technical}
+                      >
                         ••••••••
                       </p>
                       <button
@@ -328,12 +334,15 @@ export default function AuthenticatedProfilePage() {
                 <div className="flex items-center justify-between py-3">
                   <div className="flex items-center space-x-4 flex-1">
                     <label
-                      className="block text-sm font-medium text-gray-700 w-28"
+                      className="block text-base font-medium text-gray-700 w-28"
                       style={typography.technical}
                     >
                       Joined
                     </label>
-                    <p className="text-gray-900" style={typography.technical}>
+                    <p
+                      className="text-gray-900 text-base"
+                      style={typography.technical}
+                    >
                       {user?.created_at
                         ? new Date(user.created_at).toLocaleDateString()
                         : "Unknown"}
@@ -345,12 +354,15 @@ export default function AuthenticatedProfilePage() {
                 <div className="flex items-center justify-between py-3">
                   <div className="flex items-center space-x-4 flex-1">
                     <label
-                      className="block text-sm font-medium text-gray-700 w-28"
+                      className="block text-base font-medium text-gray-700 w-28"
                       style={typography.technical}
                     >
                       Updated
                     </label>
-                    <p className="text-gray-900" style={typography.technical}>
+                    <p
+                      className="text-gray-900 text-base"
+                      style={typography.technical}
+                    >
                       {user?.updated_at
                         ? new Date(user.updated_at).toLocaleDateString()
                         : "Unknown"}
