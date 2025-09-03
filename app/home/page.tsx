@@ -5,7 +5,6 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { Mic, MicOff, X } from "lucide-react";
-import Navbar from "../components/Navbar";
 import { typography } from "../styles/typography";
 import Image from "next/image";
 
@@ -65,7 +64,6 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-7xl mx-auto bg-white border border-gray-200 shadow-sm min-h-screen">
-          <Navbar />
           <div className="flex flex-col relative p-8 pt-24">
             <div className="flex-1 flex items-center justify-center w-full max-w-4xl mx-auto min-h-[calc(100vh-6rem)]">
               <div className="text-center px-6">
@@ -95,7 +93,6 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-7xl mx-auto bg-white border border-gray-200 shadow-sm min-h-screen">
-          <Navbar />
           <div className="flex flex-col gap-4 items-center justify-center pt-16 min-h-[calc(100vh-12rem)]">
             <Image
               src="/assets/uh-oh.png"
@@ -136,7 +133,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto bg-white border border-gray-200 shadow-sm min-h-screen">
-        <Navbar />
         <div className="flex flex-col relative p-8 pt-24">
           {/* Text Display Area */}
           <div className="flex-1 flex items-center justify-center w-full max-w-4xl mx-auto min-h-[calc(100vh-12rem)]">

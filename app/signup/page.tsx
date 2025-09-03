@@ -5,7 +5,6 @@ import { typography } from "../styles/typography";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import Navbar from "../components/Navbar";
 import DashboardPreview from "../components/DashboardPreview";
 
 export default function SignupPage() {
@@ -52,7 +51,6 @@ export default function SignupPage() {
   return (
     <div className="h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto bg-white border border-gray-200 shadow-sm h-screen flex flex-col">
-        <Navbar />
         <div className="flex flex-1 overflow-hidden">
           {/* Left Side - Form */}
           <div className="w-full lg:w-[40%] flex items-center justify-center px-4 lg:px-6">

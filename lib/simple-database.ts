@@ -1,8 +1,12 @@
-import { supabase } from "./supabaseClient";
+import { createClient } from "./supabase/client";
+
+// Create client instance for client-side operations
+const supabase = createClient();
 
 export interface Profile {
   id: string;
   username?: string;
+  email?: string;
   avatar_url?: string;
   created_at: string;
   updated_at: string;

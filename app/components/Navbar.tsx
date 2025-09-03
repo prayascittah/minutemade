@@ -1,13 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Profile } from "@/lib/simple-database";
-import { authService, profileService } from "@/lib/simple-database";
 import { Clock } from "lucide-react";
 import { typography } from "../styles/typography";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 import LoginInSignUp from "./LoginInSignUp";
 import LogOutProfile from "./LogOutProfile";
 
@@ -17,15 +15,9 @@ const navItems = [
 ];
 
 export default function Navbar() {
-  // state variable
-  // for the signed in user
-  const [user, setUser] = useState<Profile | null>(null);
-  // for the loading state
-  const [loading, setLoading] = useState(true);
-  // for the auth user hovering
-  const [userNavHovered, setUserNavHovered] = useState<string | null>(null);
-  // for the active user nav item
-  const [activeUserNav, setActiveUserNav] = useState<string>("logout");
+  // Use custom auth hook
+  const { user, loading, setUser } = useAuth();
+
   // specify the path of the url
   const pathname = usePathname();
   // for the signup - login hover
@@ -34,71 +26,6 @@ export default function Navbar() {
   const active = navItems.find((i) => i.href === pathname)?.name || "Sign Up";
   // for the current nav item in the signup - login
   const current = hovered || active;
-  // for the current nav item in the auth user
-  const currentUserNav = userNavHovered || activeUserNav;
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        setLoading(true);
-        const { data, error } = await authService.getCurrentUser();
-
-        if (error) {
-          console.error("Auth error:", error);
-          setUser(null);
-          return;
-        }
-
-        const userid = data?.user?.id;
-
-        if (userid) {
-          const { data: profile, error: profileError } =
-            await profileService.getProfile(userid);
-
-          if (profileError) {
-            console.error("Profile fetch error:", profileError);
-            setUser(null);
-          } else {
-            setUser(profile);
-          }
-        } else {
-          console.log("No user authenticated");
-          setUser(null);
-        }
-      } catch (err) {
-        console.error("Unexpected error:", err);
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    // Initial load
-    getUser();
-
-    // Listen for auth state changes
-    const {
-      data: { subscription },
-    } = authService.onAuthStateChange(async (event, session) => {
-      console.log("Auth state changed:", event, session?.user?.id);
-
-      if (event === "SIGNED_IN" && session?.user?.id) {
-        const { data: profile } = await profileService.getProfile(
-          session.user.id
-        );
-        setUser(profile);
-        setLoading(false);
-      } else if (event === "SIGNED_OUT") {
-        setUser(null);
-        setLoading(false);
-      }
-    });
-
-    // Cleanup subscription
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
 
   return (
     <header className="border-b border-gray-100 bg-white sticky top-0 z-50">
@@ -128,13 +55,7 @@ export default function Navbar() {
               </div>
             </div>
           ) : user ? (
-            <LogOutProfile
-              user={user}
-              currentUserNav={currentUserNav}
-              setActiveUserNav={setActiveUserNav}
-              setUserNavHovered={setUserNavHovered}
-              setUser={setUser}
-            />
+            <LogOutProfile user={user} setUser={setUser} />
           ) : (
             <LoginInSignUp
               navItems={navItems}

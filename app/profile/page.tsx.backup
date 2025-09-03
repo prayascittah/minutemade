@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Edit3, Check, X, ArrowLeft, User } from "lucide-react";
-import { typography } from "../styles/typography";
-import { useAuth } from "../hooks/useAuth";
-import { profileService } from "../../lib/simple-database";
+import { Edit3, Check, X, Camera, ArrowLeft } from "lucide-react";
+import { typography } from "@/app/styles/typography";
+import { useAuth } from "@/app/hooks/useAuth";
+import { profileService } from "@/lib/simple-database";
 import toast from "react-hot-toast";
 
-export default function AuthenticatedProfilePage() {
+export default function ProfilePage() {
   const { user, loading, isAuthenticated, setUser } = useAuth();
   const router = useRouter();
 
@@ -17,7 +17,6 @@ export default function AuthenticatedProfilePage() {
   const [editValues, setEditValues] = useState({
     username: "",
     email: "",
-    password: "",
   });
   const [saving, setSaving] = useState(false);
 
@@ -33,7 +32,6 @@ export default function AuthenticatedProfilePage() {
       setEditValues({
         username: user.username || "",
         email: user.email || "",
-        password: "",
       });
     }
   }, [user]);
@@ -48,7 +46,6 @@ export default function AuthenticatedProfilePage() {
       setEditValues({
         username: user.username || "",
         email: user.email || "",
-        password: "",
       });
     }
     setEditingField(null);
@@ -59,27 +56,18 @@ export default function AuthenticatedProfilePage() {
 
     setSaving(true);
     try {
-      if (field === "email") {
+      const updates: any = {};
+
+      if (field === "username") {
+        updates.username = editValues.username;
+      } else if (field === "email") {
+        // Note: Email updates might need special handling in Supabase
         toast.error(
           "Email updates require verification. Please contact support."
         );
         setSaving(false);
         setEditingField(null);
         return;
-      }
-
-      if (field === "password") {
-        toast.error(
-          "Password updates require additional verification. Please contact support."
-        );
-        setSaving(false);
-        setEditingField(null);
-        return;
-      }
-
-      const updates: any = {};
-      if (field === "username") {
-        updates.username = editValues.username;
       }
 
       const { data, error } = await profileService.updateProfile(
@@ -112,49 +100,38 @@ export default function AuthenticatedProfilePage() {
     return (
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 py-8">
-          <div className="animate-pulse">
-            <div className="mb-6">
-              <div className="h-5 w-24 bg-gray-300 rounded"></div>
+          <div className="animate-pulse shadow rounded-lg bg-white divide-y divide-gray-200">
+            <div className="flex flex-col">
+              <div className="p-6 flex flex-col">
+                <div className="flex items-center space-x-4">
+                  <div className="w-20 h-20 bg-gray-300 rounded-full"></div>
+                  <div className="space-y-2.5">
+                    <div className="h-6 bg-gray-300 rounded w-48"></div>
+                    <div className="h-5 bg-gray-300 rounded w-60"></div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-              <div className="flex items-center space-x-6">
-                <div className="w-20 h-20 bg-gray-300 rounded-md"></div>
-                <div className="space-y-2.5">
-                  <div className="h-6 bg-gray-300 rounded w-48"></div>
-                  <div className="h-5 bg-gray-300 rounded w-60"></div>
-                </div>
+            <div className="p-7 flex flex-col w-9/20 item-center space-y-7">
+              <div className="bg-gray-300 rounded w-45 h-5"></div>
+              <div className="grid grid-cols-2 grid-rows-4 gap-y-5 gap-x-2">
+                <div className="bg-gray-300 rounded w-22 h-4"></div>
+                <div className="bg-gray-300 rounded w-22 h-4"></div>
+                <div className="bg-gray-300 rounded w-16 h-4"></div>
+                <div className="bg-gray-300 rounded w-32 h-4"></div>
+                <div className="bg-gray-300 rounded w-32 h-4"></div>
+                <div className="bg-gray-300 rounded w-22 h-4"></div>
+                <div className="bg-gray-300 rounded w-25 h-4"></div>
+                <div className="bg-gray-300 rounded w-10 h-4"></div>
               </div>
-              <div className="mt-8 space-y-6">
-                <div className="h-5 bg-gray-300 rounded w-45"></div>
-                <div className="space-y-4">
-                  <div className="h-4 bg-gray-300 rounded w-full"></div>
-                  <div className="h-4 bg-gray-300 rounded w-full"></div>
-                  <div className="h-4 bg-gray-300 rounded w-full"></div>
-                </div>
-              </div>
+            </div>
+            <div className="p-6 flex item-center space-x-4">
+              <div className="bg-gray-300 rounded w-26 h-10"></div>
+              <div className="bg-gray-300 rounded w-26 h-10"></div>
+
+              <div></div>
             </div>
           </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-semibold text-gray-900 mb-4">
-            Authentication Required
-          </h1>
-          <p className="text-gray-600 mb-6">
-            Please sign in to view your profile
-          </p>
-          <button
-            onClick={() => router.push("/login")}
-            className="px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
-          >
-            Sign In
-          </button>
         </div>
       </div>
     );
@@ -174,55 +151,68 @@ export default function AuthenticatedProfilePage() {
           </button>
         </div>
 
-        {/* Profile Header */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-          <div className="flex items-center space-x-6 mb-8">
-            {/* Left Side - Profile Picture */}
-            <div className="relative">
-              {user?.avatar_url ? (
-                <img
-                  src={user.avatar_url}
-                  alt="Profile"
-                  className="w-20 h-20 rounded-md object-cover"
-                />
-              ) : (
-                <div className="w-20 h-20 bg-gray-200 rounded-md flex items-center justify-center">
-                  <User className="w-8 h-8 text-gray-600" />
-                </div>
-              )}
-            </div>
-
-            {/* Right Side - User Info */}
-            <div>
-              <h1
-                className="text-2xl font-bold text-gray-900"
-                style={typography.hero}
-              >
-                {user?.username || "User"}
-              </h1>
-              <p className="text-gray-600" style={typography.caption}>
-                Member since{" "}
-                {new Date(user?.created_at || "").toLocaleDateString()}
-              </p>
+        <div className="bg-white rounded-lg shadow">
+          {/* Profile Header */}
+          <div className="p-6 border-b border-gray-200">
+            <div className="flex items-center space-x-6">
+              <div className="relative group">
+                {user?.avatar_url ? (
+                  <img
+                    src={user.avatar_url}
+                    alt={user.username || "Profile"}
+                    className="w-20 h-20 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-20 h-20 bg-gray-300 rounded-full flex items-center justify-center">
+                    <svg
+                      className="w-8 h-8 text-gray-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                  </div>
+                )}
+                <button className="absolute bottom-0 right-0 bg-gray-900 text-white p-1.5 rounded-full hover:bg-gray-800 transition-colors opacity-0 group-hover:opacity-100">
+                  <Camera className="w-3 h-3" />
+                </button>
+              </div>
+              <div>
+                <h1
+                  className="text-2xl font-bold text-gray-900"
+                  style={typography.hero}
+                >
+                  {user?.username || "User"}
+                </h1>
+                <p className="text-gray-600" style={typography.caption}>
+                  Member since{" "}
+                  {new Date(user?.created_at || "").toLocaleDateString()}
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Profile Management Section */}
-          <div className="space-y-6">
+          {/* Profile Details */}
+          <div className="p-6 space-y-6">
             <div>
               <h2
-                className="text-lg font-semibold text-gray-900 mb-6"
+                className="text-lg font-semibold text-gray-900 mb-4"
                 style={typography.sectionHeader}
               >
                 Profile Information
               </h2>
-
-              <div className="space-y-4">
+              <div className="space-y-2">
                 {/* Username Field */}
-                <div className="flex items-center justify-between py-3">
+                <div className="flex items-center justify-between py-2">
                   <div className="flex items-center space-x-4 flex-1">
                     <label
-                      className="block text-sm font-medium text-gray-700 w-28"
+                      className="block text-sm font-medium text-gray-700 w-24"
                       style={typography.technical}
                     >
                       Username
@@ -238,7 +228,7 @@ export default function AuthenticatedProfilePage() {
                               username: e.target.value,
                             })
                           }
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           style={typography.technical}
                           disabled={saving}
                         />
@@ -277,10 +267,10 @@ export default function AuthenticatedProfilePage() {
                 </div>
 
                 {/* Email Field */}
-                <div className="flex items-center justify-between py-3">
+                <div className="flex items-center justify-between py-2">
                   <div className="flex items-center space-x-4 flex-1">
                     <label
-                      className="block text-sm font-medium text-gray-700 w-28"
+                      className="block text-sm font-medium text-gray-700 w-24"
                       style={typography.technical}
                     >
                       Email
@@ -290,7 +280,12 @@ export default function AuthenticatedProfilePage() {
                         {user?.email || "Not available"}
                       </p>
                       <button
-                        onClick={() => handleEdit("email")}
+                        onClick={() =>
+                          toast(
+                            "Email changes require verification. Contact support.",
+                            { icon: "ℹ️" }
+                          )
+                        }
                         className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-colors"
                         title="Email changes require verification"
                       >
@@ -300,35 +295,11 @@ export default function AuthenticatedProfilePage() {
                   </div>
                 </div>
 
-                {/* Password Field */}
-                <div className="flex items-center justify-between py-3">
-                  <div className="flex items-center space-x-4 flex-1">
-                    <label
-                      className="block text-sm font-medium text-gray-700 w-28"
-                      style={typography.technical}
-                    >
-                      Password
-                    </label>
-                    <div className="flex items-center justify-between flex-1">
-                      <p className="text-gray-500" style={typography.technical}>
-                        ••••••••
-                      </p>
-                      <button
-                        onClick={() => handleEdit("password")}
-                        className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-colors"
-                        title="Password changes require verification"
-                      >
-                        <Edit3 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
                 {/* Account Created (Read-only) */}
-                <div className="flex items-center justify-between py-3">
+                <div className="flex items-center justify-between py-2">
                   <div className="flex items-center space-x-4 flex-1">
                     <label
-                      className="block text-sm font-medium text-gray-700 w-28"
+                      className="block text-sm font-medium text-gray-700 w-24"
                       style={typography.technical}
                     >
                       Joined
@@ -342,10 +313,10 @@ export default function AuthenticatedProfilePage() {
                 </div>
 
                 {/* Last Updated (Read-only) */}
-                <div className="flex items-center justify-between py-3">
+                <div className="flex items-center justify-between py-2">
                   <div className="flex items-center space-x-4 flex-1">
                     <label
-                      className="block text-sm font-medium text-gray-700 w-28"
+                      className="block text-sm font-medium text-gray-700 w-24"
                       style={typography.technical}
                     >
                       Updated
@@ -358,6 +329,17 @@ export default function AuthenticatedProfilePage() {
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* Settings Section */}
+            <div className="pt-6 border-t border-gray-200">
+              <button
+                onClick={() => router.push("/profile/setting")}
+                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+                style={typography.button}
+              >
+                Manage Settings
+              </button>
             </div>
           </div>
         </div>
