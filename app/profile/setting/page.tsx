@@ -7,6 +7,7 @@ import { Bell, Shield, Globe, Trash2, LogOut } from "lucide-react";
 import { useAuth } from "@/app/hooks/useAuth";
 import { authService } from "@/lib/simple-database";
 import { useState } from "react";
+import { SettingsPageSkeleton } from "@/app/components/ui";
 
 export default function SettingsPage() {
   const { user, loading } = useAuth();
@@ -33,9 +34,9 @@ export default function SettingsPage() {
     toast.error("Account deletion is not yet implemented");
   };
 
-  // Show nothing while loading - let Next.js loading.tsx handle it
+  // Show loading skeleton while auth is loading
   if (loading) {
-    return null;
+    return <SettingsPageSkeleton />;
   }
 
   // Redirect to login if not authenticated
@@ -43,7 +44,6 @@ export default function SettingsPage() {
     router.push("/login");
     return null;
   }
-
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 w-full max-w-md mx-4">
       <div className="mb-4">

@@ -1,4 +1,4 @@
-export default function Loading() {
+export default function PublicProfileSkeleton() {
   return (
     <div className="h-screen bg-gray-50">
       <div className="max-w-lg mx-auto px-4 py-8">

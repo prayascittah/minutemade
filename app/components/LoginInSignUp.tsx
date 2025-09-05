@@ -2,7 +2,16 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { typography } from "../styles/typography";
 
-const LoginInSignUp = ({ navItems, current, setHovered }) => {
+interface navItems {
+  name: string;
+  href: string;
+}
+
+const LoginInSignUp = ({ navItems, current, setHovered } : {
+   navItems: navItems[];
+   current: string;
+   setHovered: (name: string | null) => void;
+}) => {
   return (
     <div className="relative flex rounded-md p-0.5 sm:p-1">
       {navItems.map((item) => {

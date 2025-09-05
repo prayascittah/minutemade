@@ -5,3 +5,5 @@ export { default as ProfileCardSkeleton } from "./ProfileCardSkeleton";
 export { default as ProfilePageSkeleton } from "./ProfilePageSkeleton";
 export { default as NavbarSkeleton } from "./NavbarSkeleton";
 export { default as SettingsPageSkeleton } from "./SettingsPageSkeleton";
+export { default as PublicProfileSkeleton } from "./PublicProfileSkeleton";
+export { default as HomePageSkeleton } from "./HomePageSkeleton";

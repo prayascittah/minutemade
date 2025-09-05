@@ -7,6 +7,7 @@ import { typography } from "../styles/typography";
 import { useAuth } from "../hooks/useAuth";
 import { profileService } from "../../lib/simple-database";
 import toast from "react-hot-toast";
+import { ProfilePageSkeleton } from "../components/ui";
 
 export default function AuthenticatedProfilePage() {
   const { user, loading, isAuthenticated, setUser } = useAuth();
@@ -108,9 +109,9 @@ export default function AuthenticatedProfilePage() {
     }
   };
 
-  // Show nothing while loading - let Next.js loading.tsx handle it
+  // Show loading skeleton while auth is loading
   if (loading) {
-    return null;
+    return <ProfilePageSkeleton />;
   }
 
   // Redirect to login if not authenticated

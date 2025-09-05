@@ -7,6 +7,7 @@ import SpeechRecognition, {
 import { Mic, MicOff, X } from "lucide-react";
 import { typography } from "../styles/typography";
 import Image from "next/image";
+import { HomePageSkeleton } from "../components/ui";
 
 export default function Home() {
   const [isListening, setIsListening] = useState(false);
@@ -59,34 +60,9 @@ export default function Home() {
     }
   }, [isListening, isClient, suggestedDialogues]);
 
-  // Show loading state during hydration
+  // Show loading skeleton during hydration
   if (!isClient) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-7xl mx-auto bg-white border border-gray-200 shadow-sm min-h-screen">
-          <div className="flex flex-col relative p-8 pt-24">
-            <div className="flex-1 flex items-center justify-center w-full max-w-4xl mx-auto min-h-[calc(100vh-6rem)]">
-              <div className="text-center px-6">
-                <p
-                  className="text-gray-400 text-xl md:text-2xl"
-                  style={typography.status}
-                >
-                  Loading...
-                </p>
-              </div>
-            </div>
-            <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-4">
-              <button
-                disabled
-                className="w-20 h-20 flex items-center justify-center shadow-lg bg-white border-2 border-black opacity-50"
-              >
-                <Mic size={28} className="text-black" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    return <HomePageSkeleton />;
   }
 
   if (!browserSupportsSpeechRecognition) {

@@ -4,14 +4,14 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, User, Calendar, Mail } from "lucide-react";
 import { typography } from "../styles/typography";
 import { useAuth } from "../hooks/useAuth";
-import { ProfileCardSkeleton } from "../components/ui";
+import { PublicProfileSkeleton } from "../components/ui";
 
 export default function PublicProfilePage() {
   const { user, loading } = useAuth();
   const router = useRouter();
 
   if (loading) {
-    return <ProfileCardSkeleton />;
+    return <PublicProfileSkeleton />;
   }
 
   return (

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { profileService, Profile } from "@/lib/simple-database";
+import { Profile } from "@/lib/simple-database";
 
 export interface UseAuthReturn {
   user: Profile | null;
@@ -20,12 +20,7 @@ export const useAuth = (): UseAuthReturn => {
     const getUser = async () => {
       try {
         setLoading(true);
-
-        // Add a longer delay to see the loading state clearly
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-
         const { data, error } = await supabase.auth.getUser();
-
         if (error) {
           console.error("Auth error:", error);
           setUser(null);
@@ -46,7 +41,6 @@ export const useAuth = (): UseAuthReturn => {
         const userid = data?.user?.id;
 
         if (userid) {
-          // Use the auth user data directly instead of making another DB call
           const userProfile: Profile = {
             id: userid,
             username: data.user.user_metadata?.username || "User",
@@ -61,30 +55,24 @@ export const useAuth = (): UseAuthReturn => {
           setUser(null);
         }
       } catch (err) {
-        console.error("Unexpected error:", err);
+        console.error("Auth error:", err);
         setUser(null);
       } finally {
         setLoading(false);
       }
     };
 
-    // Initial load
     getUser();
 
     // Listen for auth state changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log("Auth state changed:", event, session?.user?.id);
-
       if (event === "SIGNED_IN" && session?.user?.id) {
         // Use session user data directly
         const userProfile: Profile = {
           id: session.user.id,
-          username:
-            session.user.user_metadata?.username ||
-            session.user.email?.split("@")[0] ||
-            "User",
+          username: session.user.user_metadata?.username || "User",
           email: session.user.email || undefined,
           avatar_url: session.user.user_metadata?.avatar_url || null,
           created_at: session.user.created_at || new Date().toISOString(),
