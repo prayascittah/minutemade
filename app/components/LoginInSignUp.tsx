@@ -7,13 +7,17 @@ interface navItems {
   href: string;
 }
 
-const LoginInSignUp = ({ navItems, current, setHovered } : {
-   navItems: navItems[];
-   current: string;
-   setHovered: (name: string | null) => void;
+const LoginInSignUp = ({
+  navItems,
+  current,
+  setHovered,
+}: {
+  navItems: navItems[];
+  current: string;
+  setHovered: (name: string | null) => void;
 }) => {
   return (
-    <div className="relative flex rounded-md p-0.5 sm:p-1">
+    <div className="relative flex rounded-md p-1 md:p-2 lg:p-3">
       {navItems.map((item) => {
         const isSelected = current === item.name;
         return (
@@ -22,7 +26,7 @@ const LoginInSignUp = ({ navItems, current, setHovered } : {
             href={item.href}
             onMouseEnter={() => setHovered(item.name)}
             onMouseLeave={() => setHovered(null)}
-            className="relative px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2 text-xs sm:text-sm font-medium rounded-md transition-colors duration-200"
+            className="relative px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4text-sm sm:text-base md:text-lg lg:text-xl font-medium rounded-md transition-colors duration-200"
           >
             {isSelected && (
               <motion.div

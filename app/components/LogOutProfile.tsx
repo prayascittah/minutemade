@@ -24,9 +24,18 @@ const LogOutProfile = ({ user, setUser }: LogOutProfileProps) => {
 
   // Define icons for menu items
   const menuItemsWithIcons = [
-    { ...menuItems[0], icon: <User className="w-4 h-4" /> },
-    { ...menuItems[1], icon: <Settings className="w-4 h-4" /> },
-    { ...menuItems[2], icon: <LogOut className="w-4 h-4" /> },
+    {
+      ...menuItems[0],
+      icon: <User className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />,
+    },
+    {
+      ...menuItems[1],
+      icon: <Settings className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />,
+    },
+    {
+      ...menuItems[2],
+      icon: <LogOut className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />,
+    },
   ];
 
   return (
@@ -35,21 +44,21 @@ const LogOutProfile = ({ user, setUser }: LogOutProfileProps) => {
       <button
         onClick={() => router.push("/profile")}
         onMouseEnter={() => setIsOpen(true)}
-        className="flex items-center space-x-1 px-3 py-2 rounded-md hover:bg-gray-50 transition-colors"
+        className="flex items-center space-x-2 md:space-x-3 px-4 py-3 md:px-6 md:py-4 rounded-md hover:bg-gray-50 transition-colors"
         style={typography.button}
       >
-        <div className="w-6 h-6 rounded-md flex items-center justify-center">
-          <User className="w-4 h-4 text-gray-600" />
+        <div className="w-6 h-6 md:w-8 md:h-8 rounded-md flex items-center justify-center">
+          <User className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-600" />
         </div>
 
         {/* Username */}
-        <span className="hidden sm:block text-sm font-medium text-gray-700">
+        <span className="hidden sm:block text-sm md:text-base lg:text-lg font-medium text-gray-700">
           {user?.username || "User"}
         </span>
 
         {/* Dropdown arrow */}
         <ChevronDown
-          className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+          className={`w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-500 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
           }`}
         />
@@ -58,7 +67,7 @@ const LogOutProfile = ({ user, setUser }: LogOutProfileProps) => {
       {/* Dropdown Menu */}
       {isOpen && (
         <div
-          className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-50"
+          className="absolute left-0 w-56 md:w-64  bg-white rounded-md shadow-lg border border-gray-200 z-50"
           onMouseLeave={() => closeDropdown()}
         >
           {/* Menu Items */}
@@ -70,7 +79,7 @@ const LogOutProfile = ({ user, setUser }: LogOutProfileProps) => {
                 closeDropdown();
               }}
               onMouseEnter={() => setHighlightedIndex(index)}
-              className={`w-full flex items-center space-x-3 p-1.5 text-xs transition-colors ${
+              className={`w-full flex items-center space-x-3 md:space-x-4 p-3 md:p-3 text-sm md:text-base transition-colors ${
                 highlightedIndex === index || item.name === "logout"
                   ? highlightedIndex === index
                     ? "bg-gray-100 text-gray-900"
