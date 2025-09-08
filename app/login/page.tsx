@@ -26,7 +26,6 @@ export default function LoginPage() {
       toast.success("Successfully logged in!");
       window.location.href = "/home";
     }
-
     setLoading(false);
   };
 

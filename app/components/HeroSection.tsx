@@ -21,7 +21,7 @@ export default function HeroSection() {
       </p>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-8">
-        <Link href="/app">
+        <Link href="/home">
           <button
             className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-lg transition-colors"
             style={typography.button}
